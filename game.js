@@ -4,54 +4,40 @@ var level = 0;
 var started = false;
 var userclickpattern = [];
 
+$(".playimg").click(startgame);
 
-$(document).click(function () {
+function startgame(){
+  $("img").fadeOut();
+  
+  $(document).off("click");
   if (started === false) {
     nextSequence();
     $("#level-title").text("Level " + level);
     started = true;
   }
-    $(".btn").click(function () {
-      var userChosenColour = $(this).attr("id");
-      userclickpattern.push(userChosenColour);
+  $(".btn").click(function () {
+    var userChosenColour = $(this).attr("id");
+    userclickpattern.push(userChosenColour);
     
-      makesound(userChosenColour);
+    makesound(userChosenColour);
       addAnimation(userChosenColour);
       checkanswer(userclickpattern.length - 1);
     });
   }
-);
 
-$(document).keypress(function () {
-  if (started === false) {
-    nextSequence();
-    $("#level-title").text("Level " + level);
-    started = true;
-  }
-    $(".btn").click(function () {
-      var userChosenColour = $(this).attr("id");
-      userclickpattern.push(userChosenColour);
-    
-      makesound(userChosenColour);
-      addAnimation(userChosenColour);
-      checkanswer(userclickpattern.length - 1);
-    });
-  }
-);
-
-
-function checkanswer(currentlevel) {
-  if (gamepattern[currentlevel] === userclickpattern[currentlevel]) {
-    if (userclickpattern.length === gamepattern.length) {
-      setTimeout(function () {
-        nextSequence();
-        $("#level-title").text("Level " + level);
-      }, 1000);
+  function checkanswer(currentlevel) {
+    if (gamepattern[currentlevel] === userclickpattern[currentlevel]) {
+      if (userclickpattern.length === gamepattern.length) {
+        setTimeout(function () {
+          nextSequence();
+          $("#level-title").text("Level " + level);
+        }, 1000);
+      }
+    } else {
+      gameover();
+      startover();
+      $("img").fadeIn();
     }
-  } else {
-    gameover();
-    startover();
-  }
 }
 
 function startover() {
@@ -66,7 +52,7 @@ function gameover() {
   setTimeout(function () {
     $("body").removeClass("game-over");
   }, 250);
-  $("#level-title").text("Game over, Press any key to restart");
+  $("#level-title").text("Game over, CLICK Again to play");
   $(".btn").off("click");
 }
 

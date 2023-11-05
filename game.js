@@ -5,6 +5,23 @@ var started = false;
 var userclickpattern = [];
 
 
+$(document).click(function () {
+  if (started === false) {
+    nextSequence();
+    $("#level-title").text("Level " + level);
+    started = true;
+  }
+    $(".btn").click(function () {
+      var userChosenColour = $(this).attr("id");
+      userclickpattern.push(userChosenColour);
+    
+      makesound(userChosenColour);
+      addAnimation(userChosenColour);
+      checkanswer(userclickpattern.length - 1);
+    });
+  }
+);
+
 $(document).keypress(function () {
   if (started === false) {
     nextSequence();
